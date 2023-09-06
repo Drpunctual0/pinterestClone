@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/board.css">
+    <link rel="stylesheet" href="/static/drag.css">
+    
+</head>
+<body data-is-image="{% if is_image %}true{% else %}false{% endif %}" data-is-video="{% if is_video %}true{% else %}false{% endif %}">
+
+    {% include 'includes/_navbar.html' %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
+
+
+    {% block content %}
+        <!-- offcanvas ayar başı -->
+    <div class="yanPencere">
+        <button class="btn sag" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+            <i class="fa-solid fa-angles-right fa-xl" style="color: #000000;"></i>
+        </button>
+        <button type="button" class="btn ekle" data-bs-toggle="modal" data-bs-target="#myModal">
+            <i class="fa-solid fa-plus fa-xl" style="color: #141414;"></i>
+        </button>
+        <div class="border-bottom mt-3"></div>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header mt-1">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Pin taslakları</h5>
+                <button type="button" class="btn sol" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <i class="fa-solid fa-angles-left fa-xl" style="color: #000000;"></i>
+                </button>
+            </div>
+            <button type="button" class="yeniPin">Yeni bir tane oluştur</button>
+            <div class="border-bottom mt-3"></div>
+            <div class="offcanvas-body">
+                <p></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- offcanvas ayar sonu -->
+
+
+    <!-- pin oluşturma ayar başı -->
+    <form action="{% url 'board:save_pin' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="board" id="selectedBoardInput" value="">
+        <div class="container-fluid yayinla">
+            <button type="submit">Yayınla</button>
+        </div>
+    
+        <div class="container-fluid mt-5 detay">
+            <div class="row">
+                <input type="hidden" id="mediaUrl" name="image_url" value="">
+                <!-- medya bölümü -->
+                <div class="col-5">
+                    <div id="mediaDisplay">
+                        {% if pin.image and pin.image.url %}
+                            <img src="{{ pin.image.url }}" alt="Uploaded image">
+                        {% elif pin.video and pin.video.url %}
+                            <video controls>
+                                <source src="{{ pin.video.url }}" type="video/mp4">
+                            </video>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- detay bölümü -->
+                <div class="col-7">
+                    <label for="title">Başlık</label>
+                    <input type="text" id="title" name="title" placeholder="Başlık ekleyin">
+    
+                    <label for="aciklama">Açıklama</label>
+                    <textarea id="aciklama" name="description" placeholder="Pininiz için buraya ayrıntılı bir açıklama yazın veya aşağıya belirli bir liste" rows="10" cols="10"></textarea>
+    
+                    <label for="" style="margin-bottom: 5px;">Ayrıntılar</label>
+                    <div class="mb-3">
+                        <input type="radio" id="ingredients1" name="details" value="ingredients1">
+                        <label for="ingredients1">Malzemeler</label>
+    
+                        <input type="radio" id="ingredients2" name="details" value="ingredients2">
+                        <label for="ingredients2">Malzemeler</label>
+    
+                        <input type="radio" id="notes" name="details" value="notes">
+                        <label for="notes">Notlar</label>
+    
+                        <input type="radio" id="none" name="details" value="none" checked>
+                        <label for="none">Hiçbiri</label>
+    
+                        <div id="cookingTime" style="display:none;">
+                            <label for="hours">Pişirme Süresi</label>
+                            <div class="d-flex">
+                                <select id="hours" name="hours">
+                                    <option value="">0 Saat</option>
+                                </select>
+                                <select id="minutes" name="minutes">
+                                    <option value="">0 Dakika</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div id="portion" style="display:none;">
+                            <label for="porsiyon">Porsiyon</label>
+                            <select id="porsiyon" name="porsiyon">
+                                <option value="1">Porsiyon boyutunu seçin</option>
+                                <option value="1">1 Kişilik</option>
+                                <option value="2">2 Kişilik</option>
+                                <option value="3">3 Kişilik</option>
+                            </select>
+                        </div>
+    
+                        <div id="materials" class="mt-4" style="display: none;">
+                            <label for="malzemeler">Malzemeler</label>
+                            <textarea name="materials" id="" cols="10" rows="10"></textarea>
+                            <p>İpucu! Zor projeler için malzemeleri "Duvarlar için", "Çatı için" gibi bölümlere ayırmayı deneyin.</p>
+                        </div>
+    
+                        <div id="difficultyLevel" style="display:none;">
+                            <label for="difficulty">Zorluk Seviyesi</label>
+                            <select id="difficulty">
+                                <option value="">Bir zorluk seviyesi seçin</option>
+                            </select>
+                        </div>
+    
+                        <div id="notesArea" style="display:none;">
+                            <label for="note">Notlar</label>
+                            <textarea id="note" name="notes" rows="10" cols="10"></textarea>
+                        </div>
+                    </div>
+    
+                    <div class="d-flex justify-content-between mt-3 mb-4 baglanti">
+                        <div>
+                            <label for="link">Bağlantı</label>
+                            <input type="text" id="link" name="link" placeholder="Bağlantı ekleyin">
+                        </div>
+
+                        <div class="">
+                            <input type="hidden" id="pinId" value="{{ pin.id }}">
+                            <label for="">Pano</label>
+                              <button class="pano" data-bs-toggle="modal" data-bs-target="#boardsModal">
+                                Pano
+                              </button>
+                              <div class="save-panel" style="display: none; width: 240px; background-color: white; position: absolute; z-index: 10; padding-bottom: 10px;">
+                                <div class="pano-list" style="overflow-y: auto; max-height: 150px; border-radius: 15px; background-color: white; border: 1px solid #ccc;">
+                                    {% for board in boards %}
+                                        <div class="pano-name d-flex justify-content-between p-3" data-board-id="{{ board.id }}">
+                                            {{ board.title }}
+                                            <button class="delete-board-btn me-3" style="border-radius: 10px; background-color: red; color: white; border: none;">Sil</button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <!-- Pano oluştur butonu -->
+                                <button class="create-pano-btn mt-2 p-1" style="width: 100%; background-color: white; border-radius: 15px; border: 1px solid #ccc;">Pano Oluştur</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Pano oluşturma modal penceresi -->
+                        <div class="modal fade" id="createPanoModal" tabindex="-1" aria-labelledby="createPanoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="createPanoModalLabel">Pano Oluştur</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="panoName" class="form-control" placeholder="Pano Adı">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="savePano">Oluştur</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+
+                    </div>
+    
+                    <label for="" class="mt-4">Etkilenen Konular (0)</label>
+                    <input type="text" placeholder="Bir etiket ara">
+    
+                    <p>Endişelenmeyin, insanlar etiketlerinizi görmeyecek</p>
+    
+                    <div class="options-container">
+                        <div class="options-header" onclick="toggleOptions()">
+                            Daha Fazla Seçenek <span class="arrow-icon">&#x25BC;</span>
+                        </div>
+                        <div class="options-content" id="optionsContent" style="display: none;">
+                            <div class="option">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">İnsanların yorum yapmasına izin ver</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Alışveriş önerilerini göster</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Reklama özel pin</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+
+
+    <!-- pin oluşturma ayar sonu -->
+    {% endblock content %}
+        
+    
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/62bc6117aa.js" crossorigin="anonymous"></script>
+    <script>       
+        const CSRF_TOKEN = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const CREATE_BOARD_URL = "{% url 'board:create_board' %}";
+    </script>
+    <script src="{% static 'drag.js' %}"></script>
+</body>
+</html>

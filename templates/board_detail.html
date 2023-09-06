@@ -1,0 +1,29 @@
+
+{% extends 'board.html' %}
+
+{% block content %}
+<h2>{{ board.title }}</h2>
+<p>{{ board.description }}</p>
+
+<h3>Pinler</h3>
+<div class="grid">
+    {% for pin in pins %}
+        <div class="grid-item">
+            <img src="{{ pin.image.url }}" alt="{{ pin.title }}">
+            <p>{{ pin.title }}</p>
+            <!-- Diğer pin özellikleri buraya eklenebilir -->
+        </div>
+    {% endfor %}
+</div>
+
+<h3>Idea Pinler</h3>
+<div class="grid">
+    {% for idea_pin in idea_pins %}
+        <div class="grid-item">
+            <img src="{{ idea_pin.image.url }}" alt="{{ idea_pin.title }}">
+            <p>{{ idea_pin.title }}</p>
+            <!-- Diğer idea pin özellikleri buraya eklenebilir -->
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

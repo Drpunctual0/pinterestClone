@@ -1,0 +1,98 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anasayfa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/board.css">
+    <style>
+        .masonry-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        .masonry-item {
+            width: calc(100% / 6); 
+            margin: 16px; 
+        }
+        
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+        }
+        
+        
+    </style>
+</head>
+<body>
+
+
+  {% include 'includes/_navbar.html' %}
+
+    <div class="masonry-container">
+        {% for pin in pins %}
+            <div class="masonry-item">
+                <a href="{% url 'board:pin_detail' 'pin' pin.id %}" style="text-decoration: none; color: black;">
+                    <img src="{{ pin.image }}" alt="{{ pin.title }}">
+                    <p>{{ pin.title }}</p>
+                </a>
+            </div>
+        {% endfor %}
+
+        {% for idea_pin in idea_pins %}
+            <div class="masonry-item">
+                <a href="{% url 'board:pin_detail' 'ideapin' idea_pin.id %}" style="text-decoration: none; color: black;">
+                    <img src="{{ idea_pin.image }}" alt="{{ idea_pin.title }}">
+                    <p>{{ idea_pin.title }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+      
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var container = document.querySelector('.masonry-container');
+        var msnry = new Masonry( container, {
+            itemSelector: '.masonry-item',
+            columnWidth: '.masonry-item',
+            percentPosition: true
+        });
+    });
+    
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Bootstrap tooltip
+      $('[data-toggle="tooltip"]').tooltip({
+          delay: { "show": 1, "hide": 100 }
+      });
+      
+      //oluştur dropdown iconu dropdown menu açma ayarı
+      var dropdownElement = document.getElementById('dropdownMenuLink');
+      if (dropdownElement) {
+          var dropdown = new bootstrap.Dropdown(dropdownElement);
+          var ok = document.getElementById('ok');
+          if (ok) {
+              ok.addEventListener('click', function(event) {
+                  event.stopPropagation();
+                  dropdown.toggle();
+              });
+          }
+      }
+    });
+  </script>
+  <!-- fontawesome -->
+  <script src="https://kit.fontawesome.com/62bc6117aa.js" crossorigin="anonymous"></script>
+</body>
+</html>

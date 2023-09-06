@@ -1,0 +1,217 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anasayfa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/pinDetail.css">
+    <link rel="stylesheet" href="/static/board.css">
+</head>
+<body>
+    {% include 'includes/_navbar.html' %}
+
+    
+    {% block content %}
+      
+      <!-- pin detay başı -->
+      <div class="container-fluid">
+        <div class="back mt-4 ms-3 btn" style="height: 48px; width: 48px;">
+          <a href="{% url 'board:board' %}">
+              <svg class="Hn_ gUZ R19 U9O kVc" height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img">
+                  <path d="M8.415 4.586a2 2 0 1 1 2.828 2.828L8.657 10H21a2 2 0 0 1 0 4H8.657l2.586 2.586a2 2 0 1 1-2.828 2.828L1 12l7.415-7.414z"></path>
+              </svg>
+          </a>
+        </div>
+      <span class="foryou"></span>
+        <div class="row" style="margin-top: -90px;">
+            <div class="col-8 m-auto rounded-5">
+                <div class="row">
+                    <div class="col-6">
+                      <!-- <img src="{{ pin.image.url }}" alt="{{ pin.title }}" style="width: 100%; margin-top: 10%;"> -->
+                      {% if obj.image %}
+                          <img src="{{ obj.image }}" alt="{{ obj.title }}" style="width: 100%; margin-top: 10%;">
+                      {% endif %}
+                    </div>
+                    <div class="col-6">
+                        <div class="btns">
+                            <div class="right">
+                                <button><div class="threeDots" style="height: 48px; width: 48px;"><svg class="gUZ R19 U9O kVc" height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img"><path d="M12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3M3 9c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm18 0c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"></path></svg></div></button>
+                                <button><div class="send"><div class="x8f INd _O1 KS5 mQ8 OGJ YbY" style="height: 48px; width: 48px;"><svg class="gUZ R19 U9O kVc" height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img"><path d="M21 14c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2v-6c0-1.1.9-2 2-2s2 .9 2 2v4h14v-4c0-1.1.9-2 2-2zM8.82 8.84c-.78.78-2.05.79-2.83 0-.78-.78-.79-2.04-.01-2.82L11.99 0l6.02 6.01c.78.78.79 2.05.01 2.83-.78.78-2.05.79-2.83 0l-1.2-1.19v6.18a2 2 0 1 1-4 0V7.66L8.82 8.84z"></path></svg></div></div></button>
+                                <button><div class="copy" style="height: 48px; width: 48px;"><svg class="Hn_ gUZ R19 U9O kVc" height="20" width="20" viewBox="0 0 24 24" aria-hidden="true" aria-label="" role="img"><path d="m21 7.24-4.05 4.05-1.06-1.06.67-.67a1.5 1.5 0 1 0-2.12-2.12l-.67.67-1.06-1.06L16.76 3zm-9.7 9.7L7.23 21 3 16.76l4.05-4.05 1.06 1.06-.67.67a1.5 1.5 0 0 0 2.12 2.12l.67-.67zM14.63.89l-4.05 4.05a3 3 0 0 0 0 4.24l1.06 1.06-1.42 1.42-1.06-1.06a3 3 0 0 0-4.24 0L.88 14.64a3 3 0 0 0 0 4.24l4.24 4.24a3 3 0 0 0 4.24 0l4.05-4.05a3 3 0 0 0 0-4.24l-1.06-1.06 1.42-1.42 1.06 1.06a3 3 0 0 0 4.24 0l4.05-4.05a3 3 0 0 0 0-4.24L18.88.88a3 3 0 0 0-4.24 0z"></path></svg></div></button>    
+                            </div>
+                            <div class="left">
+                              <input type="hidden" id="pinId" value="{{ obj.id }}">
+                              <button class="kaydet" data-bs-toggle="modal" data-bs-target="#boardsModal">
+                                Kaydet
+                              </button>
+                              <button class="selected-board">
+                                {% if pin.board %}
+                                    {{ pin.board.title }}
+                                {% else %}
+                                    Liste
+                                {% endif %}
+                              </button>
+                              <div class="save-panel" style="display: none; width: 200px; background-color: #f5f5f5; position: absolute; z-index: 10; padding-bottom: 10px;">
+                                <div class="pano-list" style="overflow-y: auto; max-height: 150px;">
+                                    {% for board in boards %}
+                                        <div class="pano-name d-flex justify-content-between p-3" data-board-id="{{ board.id }}">
+                                            {{ board.title }}
+                                            <button class="delete-board-btn me-3" style="border-radius: 10px; background-color: red; color: white;">Sil</button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="create-pano-btn mt-2" style="width: 100%; background-color: #f5f5f5;">Pano Oluştur</button>
+                            </div>
+                            
+                            </div>
+                        </div>
+                        <div class="body">
+                          <p class="m-3 p-2">{{ obj.title }}</p>
+                          <div class="d-flex align-items-center mb-2">
+                            {% if obj.user.profile.image %}
+                                <img src="{{ obj.user.profile.image.url }}" alt="User Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                            {% else %}
+                                <div class="avatar-placeholder rounded-circle" style="width: 40px; height: 40px; line-height: 40px; text-align: center; background-color: #e0e0e0;">{{ obj.user.username|first|upper }}</div>
+                            {% endif %}
+                            <div class="ms-3">
+                                <strong><a href="{% url 'user:profile_view' obj.user.id %}">{{ obj.user.username }}</a></strong>
+                                <p>{{ obj.user.profile.followers.count }} Takipçi</p>
+                            </div>
+                            <!-- takip et -->
+                            <div class="ms-auto">
+                              {% if obj.user.id != request.user.id %}
+                                <button data-user-id="{{ obj.user.id }}" class="btn btn-light btn-sm follow-btn">
+                                    {% if obj.user not in request.user.following.all %}
+                                        Takip Et
+                                    {% else %}
+                                        Takibi Bırak
+                                    {% endif %}
+                                </button>
+                              {% endif %}
+                            </div>
+                          </div>
+
+                          <p>{{ obj.description }}</p>
+
+                          <!-- yorumlar -->
+                          <div class="comments-section" id="comments-section">
+                            <h4>Yorumlar</h4>
+                            {% if obj.comments.all.count == 0 %}
+                                <div class="mb-4" style="min-height: 100px;">
+                                    <p class="no-comments-message">Henüz yorum yok.</p>
+                                </div>
+                            {% else %}
+                                {% for comment in comments %}
+                                    <div class="d-flex align-items-start mt-2">
+                                        <img src="{{ comment.user.image.url }}" alt="Commenter Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                                        <div class="ms-3">
+                                            <strong>{{ comment.user.username }}</strong>
+                                            <p>{{ comment.content }}</p>
+                                            <small class="text-muted">{{ comment.created_on|date:"d M Y" }}</small>
+                                            {% if comment.user == request.user %}
+                                                <a href="{% url 'board:delete_comment' comment.id %}">Yorumu Sil</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <!-- Action Buttons -->
+                            <div class="mb-3 d-flex justify-content-between">
+                              <div>
+                                <h5>Ne düşünüyorsunuz?</h5>
+                              </div>
+                              <div class="d-flex position-relative">
+                                <div class="selected-reactions d-flex">
+                                  {% for reaction in unique_reactions_for_pin %}
+                                      <lottie-player src="{{ reaction.emoji_url }}" background="transparent" speed="1" style="width: 35px; height: 35px;" loop autoplay></lottie-player>
+                                  {% endfor %}
+                                </div> 
+                                <span class="badge" style="color: black; font-size: 16px;">{{ obj.reaction_set.count }}</span>
+                                <button class="btn btn-xl me-2" data-pin-id="{{ obj.id }}" style="background-color: #ccc; border-radius: 125px; width: 48px; height: 48px; margin-top: -10px;"><i class="fa-regular fa-heart fa-xl"></i></button>
+                                <div class="reaction-panel">
+                                  <button type="button" data-emoji-url="https://lottie.host/62ac5413-5887-42ff-8a68-c291445ddc07/SroX2RGhA7.json" data-bs-toggle="popover" data-bs-placement="top" title="İyi fikir!" data-trigger="hover" class="btn">
+                                    <lottie-player src="https://lottie.host/62ac5413-5887-42ff-8a68-c291445ddc07/SroX2RGhA7.json" background="transparent" speed="1" style="width: 45px; height: 45px;" loop autoplay></lottie-player>
+                                  </button>                                
+                                  <button type="button" data-emoji-url="https://lottie.host/4888f68b-83ac-4ea4-ad1d-8416cda5f79b/8IzJ3HD1wz.json" data-bs-toggle="popover" data-bs-placement="top" title="Harika" data-trigger="hover" class="btn">
+                                    <lottie-player src="https://lottie.host/4888f68b-83ac-4ea4-ad1d-8416cda5f79b/8IzJ3HD1wz.json" background="transparent" speed="1" style="width: 45px; height: 45px;" loop autoplay></lottie-player>
+                                  </button>
+                                  <button type="button" data-emoji-url="https://lottie.host/44b3192f-de9b-4cd0-be12-bcd8dbb0f62b/NMoanCR63S.json" data-bs-toggle="popover" data-bs-placement="top" title="Teşekkürler" data-trigger="hover" class="btn">
+                                    <lottie-player src="https://lottie.host/44b3192f-de9b-4cd0-be12-bcd8dbb0f62b/NMoanCR63S.json" background="transparent" speed="1" style="width: 45px; height: 45px;" loop autoplay></lottie-player>
+                                  </button>
+                                  <button type="button" data-emoji-url="https://lottie.host/63fe3c4a-0413-4a30-ade3-868b0f5a3775/xNQ05TwuoL.json" data-bs-toggle="popover" data-bs-placement="top" title="İnanılmaz" data-trigger="hover" class="btn">
+                                    <lottie-player src="https://lottie.host/63fe3c4a-0413-4a30-ade3-868b0f5a3775/xNQ05TwuoL.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+                                  </button>
+                                  <button type="button" data-emoji-url="https://lottie.host/274a5436-fb7c-4a42-81a4-9a460d63fc17/vtAPFqKJno.json" data-bs-toggle="popover" data-bs-placement="top" title="Komik" data-trigger="hover" class="btn">
+                                    <lottie-player src="https://lottie.host/274a5436-fb7c-4a42-81a4-9a460d63fc17/vtAPFqKJno.json" background="transparent" speed="1" style="width: 45px; height: 45px;" loop autoplay></lottie-player>
+                                  </button>
+                              </div>
+                              </div>
+                            </div>
+
+                            <div class="yorumYap mt-3 pt-3 pb-3">
+                              {% if obj %}
+                                {% if obj|class_name == "Pin" %}
+                                    <form method="post" action="{% url 'board:add_comment' model_name='Pin' pk=obj.id %}">
+                                {% elif obj|class_name == "IdeaPin" %}
+                                    <form method="post" action="{% url 'board:add_comment' model_name='IdeaPin' pk=obj.id %}">
+                                {% endif %}
+                              {% endif %}                                  
+                                  {% csrf_token %}
+                                  <div class="d-flex align-items-center">
+                                      <img src="{{ pin.user.profile.image.url }}" alt="User Avatar" class="rounded-circle" style="width: 40px; height: 40px;">
+                                      <div class="ms-3 d-flex align-items-center w-100">
+                                          <input type="text" name="content" placeholder="Yorum yap..." class="form-control comment-input flex-grow-1" required>
+                                          <button type="button" class="btn btn-light ms-2 emoji-btn emoji-button" style="position:relative;">😃</button>
+                                          
+                                      </div>
+                                  </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- pin detay sonu -->
+      <!-- Pano Oluşturma Modal Penceresi -->
+      <div class="modal fade" id="createPanoModal" tabindex="-1" aria-labelledby="createPanoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createPanoModalLabel">Pano Oluştur</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+              <input type="text" class="form-control" placeholder="Pano İsmi" id="panoNameInput">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+              <button type="button" class="btn btn-primary" id="submitPano">Oluştur</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    {% endblock content %}
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>   
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/62bc6117aa.js" crossorigin="anonymous"></script>
+    <script src="{% static 'pin_detail.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-5 text-center">
+            {% if viewed_user.profile.profile_image %}
+                <img src="{{ viewed_user.profile.profile_image.url }}" alt="Profile Image" class="img-fluid" style="width: 150px; height: 150px; border-radius: 125px;">
+            {% else %}
+                <p>Profil resmi yok</p>
+            {% endif %}
+            <h2>{{ viewed_user.username }}</h2>
+            <p>{{ viewed_user.profile.bio }}</p>
+            {% if viewed_user.id != request.user.id %}
+                {% if viewed_user not in request.user.following.all %}
+                    <a href="{% url 'user:follow_user' viewed_user.id %}" class="btn btn-primary">Follow</a>
+                {% else %}
+                    <a href="{% url 'user:unfollow_user' viewed_user.id %}" class="btn btn-secondary">Unfollow</a>
+                {% endif %}
+            {% else %}
+                <span class="me-2"><strong>Followers:</strong> {{ viewed_user.profile.followed_by.count }}</span>
+                <span class="me-2"><strong>Following:</strong> {{ viewed_user.profile.following.count }}</span>
+                <p class="mt-4"> <a href="{% url 'user:profile_edit' %}" class="btn btn-secondary">Edit Profile</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

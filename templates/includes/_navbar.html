@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-light p-3 border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'board:board' %}">
+        <i class="fa-brands fa-pinterest fa-xl" style="color: #db1f1f;"></i>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link anasayfa bg-light" style="color: #000000;" aria-current="page" href="{% url 'board:board' %}">Ana Sayfa</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link m-1 d-flex bg-dark rounded-5 " style="color: white; padding: 10px;" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Oluştur
+              <i class="fa-solid fa-chevron-down ms-2 mt-1" id="ok" style="color: #ffffff;"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="{% url 'board:create_idea_pin' %}">Fikir Pini Oluştur</a></li>
+              <li><a class="dropdown-item" href="{% url 'board:create_pin' %} ">Pin oluştur</a></li>
+            </ul>
+          </li>
+          <form class="d-flex" action="{% url 'board:board' %}" method="get" role="search">
+            <input class="form-control search" type="search" name="q" placeholder="Search" aria-label="Search">
+          </form>
+          <li class="bell ms-2">
+            <button data-toggle="tooltip" data-placement="bottom" title="Bildirimler"><i class="fas fa-bell fa-xl" style="color: #545454;"></i></button>
+          </li>
+          <li class="comment">
+            <button data-toggle="tooltip" data-placement="bottom" title="Mesajlar"><i class="fas fa-comment-dots fa-xl" style="color: #545454;"></i></button>
+          </li>
+          <li>
+            <a class="profil btn" href="{% url 'user:my_profile' %}">
+              <img src="{{ request.user.profile.profile_image.url }}" alt="{{ request.user.username }}" style="width: 30px; height: 30px; position: relative; top: -4px; left: -13px; border-radius: 50%;">
+          </a>          
+          </li>
+          <div class="dropdown">
+            <button class="down btn btn-secondary dropdown-toggle" type="button" id="downButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-chevron-down" style="color: #626060;"></i>
+            </button>
+            <ul class="dropdown-menu" id="menu1" aria-labelledby="downButton">
+              <div class="item-body">
+                <label for="">Şu anda kullanılan hesap</label>
+                <div class="row smallProfile">
+                  <div class="col-3">
+                    <a href=""><img src="{{ request.user.profile.profile_image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 125px; margin: 11px auto auto 10px;"></a>
+                  </div>
+                  <div class="col-9">
+                    <p style="font-weight: 500;">{{ request.user.username }}</p>
+                    <p>Kişisel</p>
+                    <p>Mail</p>
+                  </div>
+                </div>
+                <label for="">Hesaplarınız</label>
+                <ul>
+                  <li><a class="dropdown-item" href="">Hesap Ekle</a></li>
+                  <li><a class="dropdown-item" href="">İşletme hesabına geçiş yapın</a></li>
+                </ul>
+                <label for="">Daha fazla seçenek</label>
+                <ul>
+                  <li><a class="dropdown-item" href="">Ayarlar</a></li>
+                  <li><a class="dropdown-item" href="">Anasayfa akışınızı ayarlayın</a></li>
+                  <li><a class="dropdown-item" href="">Windows uygulamasını yükle</a></li>
+                  <li><a class="dropdown-item" href="">Gizlilik haklarınız</a></li>
+                  <li><a class="dropdown-item" href="">Yardım alın <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #000000; margin-left: 180px;"></i></a></li>
+                  <li><a class="dropdown-item" href="">Hizmet şartlarına gözat  <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #000000; margin-left: 92px;"></i></a></li>
+                  <li><a class="dropdown-item" href="">Gizlilik politikasına gözat <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #000000; margin-left: 82px;"></i> </a></li>
+                  <li><a class="dropdown-item" href="">Beta test kullanıcısı olun <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #000000; margin-left: 87px;"></i> </a></li>
+                  <li><a class="dropdown-item" href="{% url 'user:userLogout' %} ">Çıkış yap</a></li>
+                </ul>
+              </div>
+            </ul>
+          </div>
+        </ul>
+      </div>
+    </div>
+</nav>

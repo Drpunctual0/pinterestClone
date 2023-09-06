@@ -1,0 +1,162 @@
+.yayinla{
+    width: 93.9%;
+    height: 81px;
+    border-bottom: 1px solid #ccc;
+    position: absolute;
+    top: 83px;
+    left: 6vw;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.yayinla button{
+    width: 82px;
+    height: 48px;
+    color: white;
+    font-weight: 500;
+    background: #E60023;
+    border-radius: 40px;
+    border: none;
+}
+.detay{
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    transform: translate(35%, -80%);
+}
+#mediaDisplay img, #mediaDisplay video {
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block; 
+    margin: 0 auto; 
+    object-fit: contain; 
+    border-radius: 20px;
+}
+.col-7 > label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.col-7 > label, #cookingTime label, #portin label, #materials label, #difficultyLevel label, #notesArea label, .baglanti label{
+    font-size: 12px;
+    color: #424242;
+}
+.col-7 > input , .col-7 textarea{
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+.col-7 input:focus{
+    outline: 5px solid rgb(111, 200, 255);
+}
+textarea:focus{
+    outline: 5px solid rgb(111, 200, 255);
+}
+textarea{
+    resize: none;
+}
+
+/* radio ayarları  */
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #afadad;
+    border-radius: 50%;
+    outline: none;
+    margin-left: 10px;
+}
+
+input[type="radio"]:checked {
+    background: #000;
+}
+
+input[type="radio"] + label {
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+/* radio altındaki divlerin ayarı  */
+#portion label, #difficultyLevel label, #notesArea label{
+    display: block;
+} 
+#cookingTime select{
+    margin-top: 5px;
+    width: 45%;
+    margin-right: 3%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.baglanti input, .baglanti select{
+    width: 240px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 8px;
+    margin-right: 3%;
+    margin-top: 5px;
+}
+button.pano{
+    width: 240px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    border-radius: 15px;
+}
+#portion select, #difficultyLevel select{
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+.col-7 p{
+    margin-top: -15px;
+    margin-left: 5px;
+    font-size: 12px;
+    color: #afadad;
+}
+
+/* daha fazla seçenek ayar başı */
+.options-container {
+    width: 300px;
+    padding: 10px;
+}
+
+.options-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.arrow-icon {
+    transition: transform 0.3s;
+    margin-left: 10px;
+}
+
+.options-content {
+    margin-top: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+
+/* daha fazla seçenek ayar sonu */
+
+
+
+/* Dropdown Menü Stilleri */
+.modal-backdrop {
+    display: none;
+}

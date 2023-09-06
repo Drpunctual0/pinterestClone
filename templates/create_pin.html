@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anasayfa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/create_pin.css">
+</head>
+<body>
+
+  {% include 'includes/_navbar.html' %}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+          {{ form.errors }}
+      </div>
+    {% endif %}
+
+    <div id="main-container">
+        <div class="container">
+            <div class="top-section">
+                <div class="left-section p-0">
+                    <button type="button" class="dots" onclick="toggleMenu('dropdown-menu-1')"><i class="fa-solid fa-ellipsis fa-xl" style="color: #939191;"></i></button>
+                    <div class="dropdown-menu" id="dropdown-menu-1">
+                        <button class="dropdown-button" onclick="duplicateContainer()">Çoğalt</button>
+                        <button class="dropdown-button" onclick="removeContainer()">Sil</button>
+                    </div>
+                    <div class="upload1" id="upload1">
+                        <img id="uploaded-image" src="" alt="Yüklenen Görsel" style="display: none; width: 100%;">
+                        <form id="media-upload-form" method="POST" enctype="multipart/form-data" action="{% url 'board:upload_media' %}">
+                            {% csrf_token %}
+                            <div class="upload-container m-auto">
+                                <input type="file" class="file-upload" name="file" accept="image/*">
+                                <div class="upload-message">
+                                    <div class="icon"><i class="fa-solid fa-circle-arrow-up fa-xl" style="display: block; margin-bottom: 20px; color: #686767; text-align: center;"></i></div>
+                                    <div class="text text-center" style="font-weight: 550;">Yüklemek için sürükleyip bırakın veya tıklayın</div>
+                                </div>
+                                <div class="suggestion">Öneri: Yüksek kaliteli .jpg formatında 20 MB'den küçük dosyalar kullanın</div>
+                            </div>
+                        </form>
+                    </div>
+                                
+                    <button type="button" class="save">Siteden Kaydet</button>
+                </div>
+                <div class="right-section p-0">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'board:create_pin' %}">
+                        {% csrf_token %}
+                        <div class="button-container">
+                            <button class="select-button">Listeden seçin</button>
+                            <button type="submit" class="save-button">Kaydet</button>
+                        </div>
+                        
+                        <textarea class="title mb-3" placeholder="Başlığınızı ekleyin" name="title"></textarea>
+                        
+                        <div class="user-info mb-5">
+                            <div class="avatar">
+                                <img src="{{ user.image }}" alt="{{ user.username }}" style="width: 100%; height: 100%; border-radius: 125px;">
+                            </div>
+                            <div class="username">{{ user.username }}</div>
+                        </div>
+                        
+                        
+                        <textarea class="description mb-2" placeholder="Pininizin ne hakkında olduğunu herkese söyleyin &#128515;" name="description"></textarea>
+                        
+                        <span></span>
+                        <button class="add-alt-text">Alternatif metin ekle</button>
+                        <textarea class="link" placeholder="Bir hedef bağlantı ekleyin" name="link"></textarea>
+                        <input type="hidden" name="image_url" id="image_url_input">
+                        
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+              delay: { "show": 1, "hide": 100 }
+            })
+          })      
+          // dots dropdown menu ayar
+          function toggleMenu(menuId) {
+            var menu = document.getElementById(menuId);
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+          }    
+          // container çoğaltma ve silme fonksiyonu
+          function duplicateContainer() {
+              var mainContainer = document.getElementById('main-container');
+              var originalContainer = document.querySelector('.container');
+              var clonedContainer = originalContainer.cloneNode(true);
+              
+              var clonedDropdownMenu = clonedContainer.querySelector('.dropdown-menu');
+              if (clonedDropdownMenu) {
+                  clonedDropdownMenu.style.display = 'none';
+              }
+          
+              mainContainer.appendChild(clonedContainer);
+              closeDropdownMenu();
+          }
+          
+          function removeContainer() {
+              var mainContainer = document.getElementById('main-container');
+              var containers = mainContainer.querySelectorAll('.container');
+              if (containers.length > 1) { 
+                  mainContainer.removeChild(containers[containers.length - 1]);
+              }
+              closeDropdownMenu();
+          }
+          
+          function closeDropdownMenu() {
+              var dropdownMenu = document.getElementById('dropdown-menu-1');
+              if (dropdownMenu) {
+                  dropdownMenu.style.display = 'none';
+              }
+          }
+
+
+         // Medya dosyası seçildiğinde formu otomatik olarak gönderelim
+        $('.file-upload').on('change', function() {
+            if (this.files.length > 0) {
+                console.log("Dosya seçildi: ", this.files[0].name);
+        
+                // Dosya seçildiyse form verilerini manuel olarak gönderelim
+                var form = document.getElementById("media-upload-form");
+                var formData = new FormData(form);
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())  // Yanıtı JSON olarak işlememiz lazım
+                .then(data => {
+                    // Yanıttaki file_url'i kullanarak resmi sayfada gösterelim
+                    document.getElementById("uploaded-image").src = data.file_url;
+                    document.getElementById("uploaded-image").style.display = "block";
+                    console.log("image_url_input değeri set ediliyor: ", data.file_url);
+                    document.getElementById("image_url_input").value = data.file_url;
+                    // Resim yüklendikten sonra formu ve butonu gizlememiz lazım
+                    document.getElementById("media-upload-form").style.display = "none";
+                    document.getElementById("upload1").style.background = "transparent";
+                    document.querySelector(".save").style.display = "none";
+                })
+                .catch(error => {
+                    console.error("Bir hata meydana geldi:", error);
+                });
+        
+            } else {
+                console.log("Dosya seçilmedi.");
+            }
+        });
+        
+        document.getElementById("media-upload-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Formun normal submit işlemini engelleyelim
+        });
+
+        document.querySelector('.save-button').addEventListener('click', function() {
+            console.log("Form submit edilmeden önce image_url_input değeri: ", document.getElementById("image_url_input").value);
+        });
+        
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/62bc6117aa.js" crossorigin="anonymous"></script>
+</body>
+</html>

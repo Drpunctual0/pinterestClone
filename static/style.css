@@ -1,0 +1,615 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 5px;
+  }
+::-webkit-scrollbar-thumb {
+    background-color: #6c6663;
+    border-radius: 5px;
+}
+/* Navbar ayar başı */
+.navbar .nav-item{
+    padding-right: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 3px;
+}
+.navbar .nav-item a{
+    color: black;
+}
+.navbar .nav-item a:hover{
+    text-decoration: underline;
+}
+.oturum{
+    background-color: rgb(230, 5, 5);
+    border-radius: 125px;
+}
+.kayit{
+    background-color: #ccc;
+    border-radius: 125px;
+}
+.oturum a.nav-link:hover{
+    text-decoration: none;
+}
+.oturum:hover{
+    background-color: rgb(196, 5, 5);
+}
+.kayit a.nav-link:hover{
+    text-decoration: none
+}
+.kayit:hover{
+    background-color: #b4b3b3;
+}
+
+/* kayıt ol pencere ayar başı */
+#registerForm2 label{
+    display: block;
+    text-align: start;
+}
+
+#registerForm2 input{
+    width: 100%;
+    height: 45px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+#registerForm2 input:focus{
+    outline: 4px solid #8ab4f7;
+}
+.signup-options-container input {
+    margin-bottom: 7px;
+}
+.business-account-container {
+    height: 100%;
+    background-color: #ccc;
+    border-radius: 0 0 30px 30px;
+}
+
+.business-account-content {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    text-align: center;
+}
+.modal-content{
+    border-radius: 30px;
+}
+.modal-header {
+    border-bottom: 0;
+}
+.modal-body{
+    margin-top: -20px;
+}
+/* kayıt ol pencere ayar sonu */
+
+
+/* navbar ayar sonu */
+
+
+/* Anasayfa Ayar Başı */
+h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+}
+.slideshow {
+    width: 65%;
+    height: 60px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    font-size: 75px;
+}
+
+
+.slideshow .slide {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+    font-size: 75px;
+    font-weight: 600;
+    text-align: center;
+    left: 0px;
+    margin: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, "ＭＳ Ｐゴシック", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    transform: translateY(0);
+    animation: slideUp 5s ease-in-out forwards;
+}
+@keyframes slideUp {
+    0% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-100%); }
+}
+
+.slideshow .slide.active {
+    opacity: 1;
+    display: block;
+}
+
+.slideshow .dots {
+    position: absolute;
+    top: 140px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.slideshow .dots .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 7px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.slideshow .dots .dot.active {
+    background-color: inherit;
+}
+
+.inner-div {
+    animation: buton 2s ease-in-out infinite;
+    position: absolute;
+    bottom: 100px;
+    width: 60px; 
+    height: 60px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 50%;
+}
+@keyframes buton {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0px); }
+}
+.resimler img{
+    position: relative;
+    top: 15px;
+    border-radius: 30px;
+    z-index: -9999;
+}
+.resimler .grup1 img:nth-child(2){
+    margin-left: 20px;
+}
+.resimler .grup2 img:nth-child(1){
+    margin-right: 20px;
+}
+.resimler {
+    position: relative;
+    height: 200px;
+    animation: resimlerAnimasyon 5s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+.resimler .grup1 img:nth-child(1) {
+    animation: imgAnimasyon1 5s ease-in-out infinite;
+}
+
+.resimler .grup1 img:nth-child(2) {
+    animation: imgAnimasyon2 5s ease-in-out infinite;
+}
+
+.resimler .grup2 img:nth-child(1) {
+    animation: imgAnimasyon3 5s ease-in-out infinite;
+}
+
+.resimler .grup2 img:nth-child(2) {
+    animation: imgAnimasyon4 5s ease-in-out infinite;
+}
+
+@keyframes resimlerAnimasyon {
+    0% { transform: translateY(0); }
+    80% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+@keyframes imgAnimasyon1 {
+    0% { transform: translateY(100%); opacity: 0; }
+    10% { transform: translateY(0); opacity: 1; }
+    35% { transform: translateY(0); opacity: 1; }
+    45% { transform: translateY(-50%); opacity: 0; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}
+
+@keyframes imgAnimasyon2 {
+    0% { transform: translateY(100%); opacity: 0; }
+    20% { transform: translateY(0); opacity: 1; }
+    45% { transform: translateY(0); opacity: 1; }
+    55% { transform: translateY(-50%); opacity: 0; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}
+
+@keyframes imgAnimasyon3 {
+    0% { transform: translateY(100%); opacity: 0; }
+    30% { transform: translateY(0); opacity: 1; }
+    55% { transform: translateY(0); opacity: 1; }
+    65% { transform: translateY(-50%); opacity: 0; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}
+
+@keyframes imgAnimasyon4 {
+    0% { transform: translateY(100%); opacity: 0; }
+    40% { transform: translateY(0); opacity: 1; }
+    65% { transform: translateY(0); opacity: 1; }
+    75% { transform: translateY(-50%); opacity: 0; }
+    100% { transform: translateY(-100%); opacity: 0; }
+}
+.yellow-part {
+    width: 100%;
+    height: 75px;
+    background: rgb(255, 253, 146);
+    position: relative;
+    z-index: 999;
+    opacity: 1;
+    top: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.yellow-part-button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    outline: none;
+}
+.text{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ikinci sayfa ayar başı */
+.ikincisayfa{
+    width: 100%;
+    background: rgb(255, 253, 146);
+    position: relative;
+    opacity: 1;
+}
+.content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 73px;
+  color: rgb(195, 25, 82);
+  font-weight: bold;
+}
+
+.icerik {
+  max-width: 500px;
+  max-height: 600px;
+  font-size: 30px;
+  color: rgb(195, 25, 82);
+  text-align: center;
+}
+
+.kesfet {
+  height: 30px;
+  min-width: 103px;
+  background: rgb(195, 25, 82);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 125px;
+  padding: 0;
+}
+
+.kesfet-text {
+  color: rgb(255, 253, 158);
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* ikinci sayfa ayar sonu */
+
+/* üçüncü sayfa ayar başı */
+.ucuncusayfa{
+    background-color: rgb(218, 255, 246);
+}
+
+.content-wrapper1 {
+    text-align: center;
+}
+
+.title-wrapper1 {
+    height: 50%; 
+    width: 100%; 
+    color: rgb(0, 107, 108); 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, "ＭＳ Ｐゴシック", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; 
+    font-size: 70px; 
+    font-weight: bold; 
+    text-align: center;
+}
+
+.description-wrapper1 {
+    max-width: 500px; 
+    margin: auto;
+    margin-top: 30px;
+}
+
+.description1 {
+    font-size: 30px; 
+    color: rgb(0, 107, 108); 
+}
+
+.explore-button-wrapper1 {
+    background: rgb(0, 107, 108); 
+    color: rgb(204, 246, 238); 
+    font-size: 16px; 
+    text-align: center; 
+    font-weight: bold; 
+    height: 30px;
+    width: 103px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 125px;
+}
+/* üçüncü sayfa ayar sonu */
+
+
+/* dördüncü sayfa ayar başı */
+.dorduncusayfa{
+    background: rgb(255, 223, 233);
+}
+.intro-section{
+    width: 100%; 
+    padding-top: 80px;
+}
+.intro-content{
+    height: 100%;
+}
+.content-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 120px;
+}
+.intro-text{
+    width: 420px; 
+    font-size: 70px; 
+    color: rgb(195, 47, 0); 
+    font-weight: bold; 
+    text-align: center;
+}
+.sub-text{
+    max-width: 500px; 
+    font-size: 30px; 
+    color: rgb(195, 47, 0); 
+    text-align: center;
+}
+.explore-button2 {
+    height: 58px;
+    min-width: 113px;
+    background: rgb(195, 47, 0);
+    color: rgb(255, 223, 233);
+    font-size: 16px; 
+    text-align: center; 
+    font-weight: bold; 
+    width: 103px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 125px;
+}
+/* dördüncü sayfa ayar sonu */
+
+/* beşinci sayfa ayar başı */
+.besincisayfa{
+    background: url(img/besincisayfa.png) no-repeat center center fixed;
+    background-size: cover;
+    height: 110vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.1);
+}
+.fikir{
+  color: white;
+  margin: auto;
+  font-size: 85px;
+  font-weight: 600;
+  max-width: 500px;
+}
+.up{
+    width: 50px;
+    height: 50px;
+    background: rgb(156, 3, 67);
+    border-radius: 125px;
+    z-index: 3;
+    position: relative;
+    bottom: 95px;
+    left: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 50px;
+}
+.up:hover{
+    background: rgb(156, 3, 67);
+}
+
+/* giriş yap kayıt ol kısmı */
+.signup-container {
+    background: #fff;
+    border-radius: 30px;
+    width: 80%;
+    height: 110vh;
+    min-height: 400px;
+    padding: 20px 10px 24px;
+    margin: auto;
+}
+.pinterest-logo{
+  height: 45px;
+  width: 45px;
+  margin: 8px auto 46px;
+}
+
+.pinterest-logo-svg {
+  display: block;
+}  
+  
+.welcome-container {
+    margin: 8px auto 6px;
+}
+
+.welcome-container h1 {
+    color: rgb(51, 51, 51);
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -1.2px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.message-container {
+    margin: 0 auto 22px;
+    width: 300px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.signup-options-container {
+    text-align: center;
+    margin: 0px auto;
+    width: 268px;
+    margin: 0px auto;
+}
+
+#registerForm label{
+    display: block;
+    text-align: start;
+}
+#registerForm input{
+    width: 100%;
+    height: 45px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+#registerForm input:focus{
+    outline: 4px solid #8ab4f7;
+}
+.signup-options-container input {
+    margin-bottom: 7px;
+}
+
+.signup-options-container button {
+    border: 0px; 
+    height: 40px; 
+    display: inline-block; 
+    border-radius: 20px; 
+    -webkit-font-smoothing: antialiased; 
+    padding: 0px 18px; 
+    font-size: 15px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin-top: 8px; 
+    vertical-align: middle; 
+    text-align: center; 
+    background-color: rgb(230, 0, 35); 
+    color: rgb(255, 255, 255); 
+    width: 100%;
+}
+button.facebook{
+    background-color: rgb(90, 90, 250);
+}
+.fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    left: 40px;
+}
+button.google{
+    background-color: white;
+    color: #000;
+    border: 1px solid black;
+}
+button.google span{
+    position: relative;
+    bottom: 4px;
+    left: 10px;
+}
+.terms-container {
+    font-size: 11px; 
+    font-weight: normal; 
+    margin: auto;
+    margin-top: 20px;
+    transition: opacity 0.2s linear 0s; 
+    color: rgb(118, 118, 118); 
+    width: 224px;
+    text-align: center;
+}
+.terms-container a{
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+}
+.login-container {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+.login-container button{
+    background: transparent;
+    border: none;
+    font-weight: 500;
+}
+/* beşinci sayfa ayar sonu */
+
+
+/* Anasayfa ayar sonu */
+
+
+/* footer ayar başı */
+.container-links {
+    z-index: 3;
+    height: 5vh;
+    width: 100%;
+  }
+  
+  .link-item {
+    display: inline-block;
+    padding: 0 10px;
+    margin-top: 5px;
+  }
+  
+  .link {
+    color: #000;
+    text-decoration: none;
+  }
+  .link:hover{
+      text-decoration: underline;
+  }
+/* footer ayar sonu */
